@@ -1,0 +1,452 @@
+
+
+        .ai-detect-section {
+            background: var(--surface, #fff);
+        }
+
+        .ai-detect-card {
+            background: var(--card, #fff);
+            border: 1px solid var(--border, #e8e0d0);
+            border-radius: 20px;
+            overflow: hidden;
+            height: 100%;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+            transition: box-shadow 0.3s;
+        }
+
+        .ai-detect-card:hover {
+            box-shadow: 0 8px 36px rgba(0, 0, 0, 0.12);
+        }
+
+        .ai-detect-card-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2b26 100%);
+            color: #cfae55;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            padding: 16px 24px;
+            border-bottom: 1px solid rgba(207, 174, 85, 0.3);
+            text-transform: uppercase;
+        }
+
+        .ai-detect-card-body {
+            padding: 24px;
+        }
+
+        .ai-upload-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: 2px dashed var(--gold, #cfae55);
+            border-radius: 14px;
+            padding: 36px 20px;
+            cursor: pointer;
+            text-align: center;
+            color: var(--muted, #888);
+            transition: background 0.2s, border-color 0.2s;
+            background: rgba(207, 174, 85, 0.04);
+            font-size: 0.9rem;
+        }
+
+        .ai-upload-label:hover {
+            background: rgba(207, 174, 85, 0.1);
+            border-color: #b8963e;
+        }
+
+        .ai-upload-icon {
+            font-size: 2.2rem;
+            color: var(--gold, #cfae55);
+        }
+
+        .ai-preview-wrap {
+            position: relative;
+            margin-top: 14px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border, #e8e0d0);
+        }
+
+        .ai-preview-img {
+            width: 100%;
+            max-height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .ai-clear-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.65);
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+
+        .ai-clear-btn:hover {
+            background: rgba(220, 53, 69, 0.85);
+        }
+
+        .ai-status-box {
+            margin-top: 12px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .ai-status-box.loading {
+            background: rgba(207, 174, 85, 0.12);
+            color: var(--gold, #cfae55);
+            border: 1px solid rgba(207, 174, 85, 0.3);
+        }
+
+        .ai-status-box.error {
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            border: 1px solid rgba(220, 53, 69, 0.3);
+        }
+
+        .ai-result-box {
+            margin-top: 14px;
+            padding: 18px;
+            border-radius: 14px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(207, 174, 85, 0.08) 0%, rgba(207, 174, 85, 0.04) 100%);
+            border: 1px solid rgba(207, 174, 85, 0.35);
+        }
+
+        .ai-result-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--muted, #888);
+            margin-bottom: 6px;
+        }
+
+        .ai-result-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--gold, #cfae55);
+            text-transform: capitalize;
+        }
+
+        .ai-result-confidence {
+            font-size: 0.78rem;
+            color: var(--muted, #888);
+            margin-top: 2px;
+        }
+
+        .btn-ai-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: linear-gradient(to right, #cfae55, #b8963e);
+            color: #1a1a1a;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            border: none;
+            border-radius: 50px;
+            padding: 13px 28px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-ai-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(207, 174, 85, 0.35);
+        }
+
+        .btn-ai-primary:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .btn-ai-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            background: transparent;
+            color: var(--gold, #cfae55);
+            font-weight: 600;
+            font-size: 0.85rem;
+            border: 1.5px solid var(--gold, #cfae55);
+            border-radius: 50px;
+            padding: 8px 20px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .btn-ai-secondary:hover {
+            background: var(--gold, #cfae55);
+            color: #1a1a1a;
+        }
+
+        .btn-ai-ghost {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            background: transparent;
+            color: var(--muted, #888);
+            font-weight: 500;
+            font-size: 0.82rem;
+            border: 1px solid var(--border, #e8e0d0);
+            border-radius: 50px;
+            padding: 7px 18px;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .btn-ai-ghost:hover {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+
+        .ai-chip-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            min-height: 54px;
+            padding: 4px 0;
+            align-content: flex-start;
+        }
+
+        .ai-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, rgba(207, 174, 85, 0.15) 0%, rgba(207, 174, 85, 0.07) 100%);
+            border: 1px solid rgba(207, 174, 85, 0.4);
+            border-radius: 50px;
+            padding: 6px 14px 6px 12px;
+            font-size: 0.84rem;
+            font-weight: 600;
+            color: var(--fg, #1a1a1a);
+            text-transform: capitalize;
+            transition: background 0.2s;
+        }
+
+        .ai-chip:hover {
+            background: rgba(207, 174, 85, 0.22);
+        }
+
+        .ai-chip-remove {
+            width: 18px;
+            height: 18px;
+            border: none;
+            background: rgba(0, 0, 0, 0.12);
+            color: var(--muted, #555);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            flex-shrink: 0;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .ai-chip-remove:hover {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .ai-empty-msg {
+            font-size: 0.88rem;
+            color: var(--muted, #888);
+            margin: 0;
+            padding: 6px 0;
+            font-style: italic;
+        }
+
+        .ai-results-title {
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--fg, #1a1a1a);
+        }
+
+        .ai-recipe-card {
+            background: var(--card, #fff);
+            border: 1px solid var(--border, #e8e0d0);
+            border-radius: 16px;
+            overflow: hidden;
+            height: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ai-recipe-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .ai-recipe-card-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: #f0ebe0;
+        }
+
+        .ai-recipe-card-img-placeholder {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #1a1a1a, #2d2b26);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .ai-recipe-card-body {
+            padding: 16px 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .ai-recipe-card-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            line-height: 1.35;
+            color: var(--fg, #1a1a1a);
+            margin: 0;
+        }
+
+        .ai-recipe-card-desc {
+            font-size: 0.8rem;
+            color: var(--muted, #888);
+            margin: 0;
+            flex: 1;
+        }
+
+        .ai-recipe-card-link {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--gold, #cfae55);
+            margin-top: auto;
+        }
+
+        .ai-no-recipe-msg {
+            text-align: center;
+            color: var(--muted, #888);
+            font-size: 0.95rem;
+            padding: 30px 0;
+        }
+
+        .ai-source-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .ai-source-tab {
+            flex: 1;
+            padding: 9px 12px;
+            border-radius: 50px;
+            border: 1.5px solid var(--border, #e8e0d0);
+            background: transparent;
+            color: var(--muted, #888);
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .ai-source-tab.active {
+            background: linear-gradient(to right, #cfae55, #b8963e);
+            color: #1a1a1a;
+            border-color: #cfae55;
+        }
+
+        .ai-source-tab:not(.active):hover {
+            border-color: #cfae55;
+            color: var(--fg, #1a1a1a);
+        }
+
+        .ai-camera-wrap {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 2px solid rgba(207, 174, 85, 0.4);
+            background: #0a0a0a;
+        }
+
+        .ai-camera-video {
+            width: 100%;
+            max-height: 220px;
+            object-fit: cover;
+            display: block;
+            background: #000;
+        }
+
+        .ai-camera-status {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.7);
+            color: #cfae55;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .ai-camera-status.hidden {
+            display: none;
+        }
+
+        #aiScanBtn.camera-mode {
+            background: linear-gradient(to right, #1a7a1a, #156615);
+            color: #fff;
+        }
+
+        #aiScanBtn.camera-mode:hover:not(:disabled) {
+            box-shadow: 0 6px 20px rgba(34, 139, 34, 0.35);
+        }
+
+        [data-theme="dark"] .ai-detect-section {
+            background: var(--surface);
+        }
+
+        [data-theme="dark"] .ai-detect-card {
+            background: var(--card);
+            border-color: var(--border);
+        }
+
+        [data-theme="dark"] .ai-chip {
+            color: #eee;
+        }
+
+        [data-theme="dark"] .ai-recipe-card {
+            background: var(--card);
+            border-color: var(--border);
+        }
+
+        [data-theme="dark"] .ai-recipe-card-title {
+            color: #eee;
+        }

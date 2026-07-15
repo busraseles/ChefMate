@@ -1,0 +1,47 @@
+# ============================================================
+#  ChefMate — .gitignore
+# ============================================================
+
+# ---- Gerçek yapılandırma (DB şifresi/host bilgisi İÇEREBİLİR) ----
+# Repo'da sadece config/config.example.php bulunur; gerçek dosya
+# her geliştiricinin kendi makinesinde bu şablondan kopyalanır.
+/config/config.php
+
+# ---- PHP ----
+*.log
+/vendor/
+
+# ---- Python / Flask (python-api/) ----
+/python-api/venv/
+/python-api/.venv/
+/python-api/__pycache__/
+/python-api/**/__pycache__/
+/python-api/*.pyc
+/python-api/**/*.pyc
+
+# Flask'e gönderilen görüntülerin denetim/debug kopyaları — kişisel veri
+# içerebileceğinden repo'ya dahil edilmez. Klasörün kendisi .gitkeep ile korunur.
+/python-api/uploads/*
+!/python-api/uploads/.gitkeep
+
+# ---- Uygulama runtime dosyaları ----
+/storage/logs/*
+!/storage/logs/.gitkeep
+
+# Kök dizindeki eski (legacy) yükleme klasörü — kullanıcı tarafından
+# yüklenen yeni görüntüler için. Not: Bu .gitignore kuralı sadece BUNDAN
+# SONRAKİ yeni/takip edilmeyen dosyalar için geçerlidir; önceden commit
+# edilmiş örnek görseller repo geçmişinde kalmaya devam eder.
+/uploads/*
+!/uploads/.gitkeep
+!/uploads/avatars/
+
+# ---- IDE / İşletim Sistemi ----
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# ---- Model eğitim çıktıları (büyük ikili/önbellek dosyalar) ----
+/chefmate_cls_v22/weights/last.pt

@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Var olan gerçek bir dosya veya klasörse (css/js gibi), doğrudan sun.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Aksi halde her şeyi index.php'ye yönlendir; gerçek yol PHP tarafında
+# ($_SERVER['REQUEST_URI']) okunur.
+RewriteRule ^ index.php [QSA,L]

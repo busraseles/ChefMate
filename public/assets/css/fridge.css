@@ -1,0 +1,656 @@
+
+
+:root {
+  --gold: #FFD700;
+  --metal: linear-gradient(135deg, #cbd5e1 0%, #475569 100%);
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 215, 0, 0.15);
+}
+
+* { box-sizing: border-box; }
+
+.fridge-body {
+  background: #000;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fridge-main-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 28%;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  perspective: 2500px;
+}
+
+.fridge-main-wrapper.active-panel {
+  padding-left: 20%;
+}
+
+.fridge-unit {
+  width: 450px;
+  height: 750px;
+  background: #1a1a1c;
+  border-radius: 20px;
+  box-shadow: 0 50px 100px rgba(0,0,0,0.9);
+  border: 1px solid #333;
+  z-index: 5;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: 5px;
+
+  overflow: visible;
+  position: relative;
+}
+
+.smart-sensor-bar {
+  width: 100%;
+  height: 35px;
+  background: linear-gradient(180deg, #2c2c2e 0%, #1a1a1a 100%);
+  border-bottom: 2px solid #333;
+  border-radius: 18px 18px 0 0;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 15px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sensor-eye {
+  width: 40px;
+  height: 6px;
+  background: #000;
+  border-radius: 10px;
+  border: 1px solid #444;
+  position: relative;
+}
+
+.sensor-eye::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 4px;
+  background: #ff0000;
+  border-radius: 50%;
+  box-shadow: 0 0 5px #ff0000;
+}
+
+.status-leds { display: flex; gap: 8px; }
+.led { width: 6px; height: 6px; border-radius: 50%; background: #333; }
+
+.pulse-green { background: #00ff88; box-shadow: 0 0 8px #00ff88; animation: pulse 2s infinite; }
+.pulse-blue  { background: #00d9ff; box-shadow: 0 0 8px #00d9ff; animation: pulse 2.5s infinite; }
+.pulse-gold  { background: #ffd700; box-shadow: 0 0 8px #ffd700; animation: pulse 1.8s infinite; }
+
+@keyframes pulse {
+  0%   { opacity: 0.4; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
+.sensor-serial {
+  margin-left: auto;
+  font-size: 10px;
+  font-family: 'Courier New', monospace;
+  color: #555;
+  letter-spacing: 1px;
+}
+
+.fridge-section {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  display: flex;
+}
+
+.upper-fridge { flex: 2; }
+.lower-freezer { flex: 1; }
+
+.fridge-interior {
+  height: 100%;
+  width: 100%;
+  margin: 6px;
+  border-radius: 10px;
+  position: relative;
+
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  overflow: hidden;
+  background: #111;
+  box-shadow: inset 0 0 70px rgba(0,0,0,0.35);
+  transition: background 0.5s ease, box-shadow 0.5s ease;
+}
+
+.fridge-interior::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  pointer-events: none;
+  opacity: 0.25;
+}
+
+.fridge-unit:has(.open) .fridge-interior {
+  background: radial-gradient(circle at center, #ffffff 0%, #e2e8f0 100%);
+  box-shadow: inset 0 0 60px rgba(0,0,0,0.12);
+}
+
+.fridge-interior img {
+  filter: brightness(0.55);
+  transition: 0.5s;
+}
+.fridge-unit:has(.open) .fridge-interior img {
+  filter: brightness(1);
+}
+
+.freezer-bg {
+  background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%) !important;
+}
+
+.shelf-line {
+  position: relative;
+  flex: 1;
+  min-height: 70px;
+  border: none;
+
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  padding: 0 10px 8px 10px;
+  z-index: 2;
+}
+
+.shelf-line::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 12px;
+  background: linear-gradient(180deg, rgba(200, 230, 255, 0.4) 0%, rgba(150, 200, 250, 0.2) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 3px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transform: perspective(100px) rotateX(20deg);
+}
+
+.shelf-line::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  box-shadow: 0 0 12px rgba(255,255,255,0.8), 0 0 4px rgba(255,255,255,1);
+  z-index: 5;
+}
+
+.shelf-line img {
+  filter: drop-shadow(0 10px 5px rgba(0,0,0,0.1));
+  transform: translateY(-2px);
+  transition: transform 0.3s ease;
+}
+.shelf-line img:hover {
+  transform: translateY(-8px) scale(1.1);
+}
+
+.freezer-bg .shelf-line::after {
+  background: rgba(255, 255, 255, 0.6);
+  filter: blur(1px);
+}
+
+.door {
+  background: var(--metal);
+  position: absolute;
+  z-index: 20;
+  width: 50%;
+  height: 100%;
+  border: 1px solid #333;
+  transition: 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+
+.door-left-top, .door-left-bottom { left: 0; transform-origin: left; }
+.door-right-top, .door-right-bottom { right: 0; transform-origin: right; }
+
+.door.open { transform: rotateY(-115deg); }
+.door-right-top.open, .door-right-bottom.open { transform: rotateY(115deg); }
+
+.pro-handle {
+  width: 14px;
+  height: 80%;
+  top: 10%;
+  background: linear-gradient(to right, #2c2c2c 0%, #d1d1d1 50%, #2c2c2c 100%);
+  position: absolute;
+  border-radius: 10px;
+  box-shadow: 2px 5px 15px rgba(0,0,0,0.5), inset 1px 0px 2px rgba(255,255,255,0.3);
+  border: 1px solid #1a1a1a;
+}
+
+.pro-handle-short {
+  width: 14px;
+  height: 65%;
+  top: 17%;
+  background: linear-gradient(to right, #2c2c2c 0%, #d1d1d1 50%, #2c2c2c 100%);
+  position: absolute;
+  border-radius: 10px;
+  box-shadow: 2px 5px 15px rgba(0,0,0,0.5);
+  border: 1px solid #1a1a1a;
+}
+
+.door-left-top .pro-handle,
+.door-left-bottom .pro-handle-short { right: 20px; }
+.door-right-top .pro-handle,
+.door-right-bottom .pro-handle-short { left: 20px; }
+
+.pro-handle::after, .pro-handle-short::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: repeating-linear-gradient(transparent, transparent 20px, rgba(0,0,0,0.1) 21px);
+  border-radius: 10px;
+}
+
+.side-ai-panel {
+  position: fixed;
+  right: -420px;
+  width: 380px;
+  height: 85vh;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 30px;
+  border: 1px solid var(--glass-border);
+  padding: 25px;
+  transition: 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.fridge-main-wrapper.active-panel .side-ai-panel { right: 40px; }
+
+.panel-title { font-family: 'Cinzel', serif; font-weight: 700; margin: 0; letter-spacing: 2px; }
+.panel-subtitle { font-size: 0.7rem; color: #666; letter-spacing: 3px; margin-bottom: 20px; }
+
+.inventory-scroll-area { flex: 1; overflow-y: auto; padding-right: 5px; min-height: 0; }
+
+.inv-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 16px;
+  padding: 12px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: 0.3s;
+  border-left: 4px solid var(--gold);
+}
+.inv-card:hover { background: rgba(255,255,255,0.08); transform: translateX(5px); }
+
+.inv-card img { width: 38px; height: 38px; object-fit: contain; }
+.inv-emoji { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; flex-shrink: 0; line-height: 1; }
+.inv-info { flex: 1; }
+.inv-name { display: block; font-weight: 600; color: #f7f2f2 !important; font-size: 0.95rem; }
+.inv-meta { font-size: 0.75rem; color: #888; }
+
+.status-dot { width: 10px; height: 10px; border-radius: 50%; background: #00ff88; box-shadow: 0 0 10px #00ff88; }
+.status-warning { background: #ff4d4d; box-shadow: 0 0 10px #ff4d4d; }
+
+.btn-consume {
+  background: rgba(255, 77, 77, 0.2);
+  border: none;
+  color: #ff4d4d;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: 0.3s;
+}
+.inv-card:hover .btn-consume { opacity: 1; }
+
+.btn-pro {
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 800;
+  transition: 0.3s;
+  width: 100%;
+}
+
+.btn-main-ai {
+  background: var(--gold);
+  color: #000;
+  margin-bottom: 12px;
+  box-shadow: 0 10px 20px rgba(255,215,0,0.15);
+}
+
+.btn-group-pro { display: flex; gap: 10px; }
+.btn-add { background: #222; color: #fff; border: 1px solid #333; }
+.btn-back { background: transparent; color: #666; }
+.btn-main-ai {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 0;
+}
+
+.btn-tarifler-fixed {
+  display: none;
+  width: 380px;
+  max-width: 94vw;
+  margin: 12px auto 0;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: var(--gold);
+  color: #000;
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 10px 20px rgba(255,215,0,0.2);
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: 0.3s;
+}
+.btn-tarifler-fixed:hover {
+  background: #ffe04d;
+  color: #000;
+  transform: translateY(-2px);
+}
+.fridge-main-wrapper.active-panel .btn-tarifler-fixed {
+  display: block;
+}
+
+.panel-footer {
+  flex-shrink: 0;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin-top: 8px;
+}
+
+.custom-overlay-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-card {
+  background: #111;
+  padding: 30px;
+  border-radius: 25px;
+  border: 1px solid var(--gold);
+  width: min(400px, 96vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.form-row-pro {
+  display: flex;
+  gap: 12px;
+}
+.form-col {
+  flex: 1;
+  min-width: 0;
+}
+
+.pro-input-field {
+  background: #1a1a1c;
+  border: 1px solid #333;
+  padding: 12px;
+  border-radius: 12px;
+  color: #fff;
+  width: 100%;
+}
+
+.db-search-results-pro {
+  max-height: 150px;
+  overflow-y: auto;
+  background: #0a0a0a;
+  border-radius: 10px;
+  border: 1px solid #222;
+}
+
+.search-row {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.search-row:hover { background: #222; color: var(--gold); }
+
+.selected-badge-pro {
+  background: rgba(255,215,0,0.1);
+  border: 1px dashed var(--gold);
+  padding: 10px;
+  border-radius: 12px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.label-pro {
+  font-size: 0.7rem;
+  color: #666;
+  font-weight: 800;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.btn-confirm {
+  background: var(--gold);
+  color: #000;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  width: 100%;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.btn-cancel {
+  background: transparent;
+  color: #666;
+  border: none;
+  width: 100%;
+  font-size: 0.8rem;
+}
+
+.new-product-box {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px dashed rgba(255,215,0,0.35);
+  background: rgba(255,255,255,0.03);
+}
+.new-product-box .mini-note {
+  font-size: 0.72rem;
+  color: #888;
+  margin-top: 6px;
+}
+
+.temp-popup {
+  display: none;
+  position: absolute;
+  background: #111;
+  border: 1px solid var(--gold);
+  padding: 15px;
+  border-radius: 15px;
+  z-index: 3000;
+  width: 150px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  text-align: center;
+}
+
+.temp-popup button {
+  background: var(--gold);
+  border: none;
+  border-radius: 5px;
+  width: 30px;
+  font-weight: bold;
+}
+
+.smart-tag{
+  position:absolute;
+  top:10px;
+  right:12px;
+  padding:6px 10px;
+  border-radius:10px;
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,215,0,0.35);
+  color: var(--gold);
+  font-weight: 800;
+  font-size: 12px;
+  backdrop-filter: blur(8px);
+  z-index: 30;
+}
+
+@media (max-width: 900px) {
+  .fridge-body {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+    align-items: flex-start;
+    padding: 20px 0 40px;
+  }
+
+  .fridge-main-wrapper {
+    flex-direction: column;
+    align-items: center;
+    padding-left: 0 !important;
+    width: 100%;
+    height: auto;
+    gap: 20px;
+    justify-content: flex-start;
+  }
+
+  .fridge-main-wrapper.active-panel {
+    padding-left: 0 !important;
+  }
+
+  .fridge-unit {
+    width: min(440px, 94vw);
+    height: auto;
+    min-height: 600px;
+  }
+
+  .upper-fridge {
+    flex: 2;
+    min-height: 340px;
+  }
+  .lower-freezer {
+    flex: 1;
+    min-height: 160px;
+  }
+
+  .side-ai-panel {
+    position: relative !important;
+    right: 0 !important;
+    top: 0 !important;
+    transform: none !important;
+    width: min(440px, 94vw) !important;
+    height: auto !important;
+    max-height: 70vh !important;
+    display: none;
+    margin: 0 auto;
+  }
+
+  .fridge-main-wrapper.active-panel .side-ai-panel {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .fridge-body {
+    padding: 12px 0 60px;
+  }
+
+  .fridge-unit {
+    width: 96vw;
+    min-height: 520px;
+  }
+
+  .upper-fridge  { min-height: 300px; }
+  .lower-freezer { min-height: 140px; }
+
+  .sensor-serial { display: none; }
+
+  .panel-footer .btn-group-pro {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn-pro {
+    font-size: 0.75rem;
+    padding: 10px 12px;
+  }
+
+  .custom-overlay-modal {
+    padding: 12px !important;
+  }
+
+  .modal-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 16px !important;
+    padding: 20px !important;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .form-row-pro {
+    flex-direction: column !important;
+    gap: 12px;
+  }
+
+  .temp-popup {
+    width: 140px !important;
+  }
+
+  .smart-sensor-bar {
+    padding: 0 10px;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 900px) {
+  .door {
+    width: 50% !important;
+  }
+}
