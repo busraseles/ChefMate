@@ -1,23 +1,3 @@
-"""
-services/predictor.py
-======================
-ChefMate malzeme tanıma (YOLO11n-cls) tahmin mantığı.
-
-Bu dosya, eski `predict_food.py`'nin yerini alır. Temel farklar:
-
-  1) Model artık HER İSTEKTE değil, uygulama sürecinde SADECE BİR KEZ
-     yüklenir (get_model() bir lazy singleton'dır). Eski yapıda
-     `shell_exec()` her tetiklendiğinde yeni bir Python process'i
-     başlıyor ve YOLO modelini sıfırdan diske okuyordu — bu hem yavaş
-     hem de gereksiz I/O'ydu.
-
-  2) OpenCV (cv2) artık GERÇEKTEN kullanılıyor: PHP'den HTTP üzerinden
-     gelen ham resim byte'ları önce cv2.imdecode() ile çözümlenip
-     geçerli bir görüntü olup olmadığı doğrulanıyor, sonra
-     cv2.cvtColor() ile BGR (OpenCV'nin varsayılanı) → RGB (YOLO'nun
-     beklediği format) dönüşümü yapılıyor.
-"""
-
 import os
 import cv2
 import numpy as np
