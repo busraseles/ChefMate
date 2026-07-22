@@ -1,20 +1,3 @@
-"""
-app.py
-======
-ChefMate Flask API — HTTP giriş noktası.
-
-Bu dosya BİLİNÇLİ OLARAK "ince" tutulmuştur: YOLO/OpenCV kodu burada
-YOKTUR, hepsi services/predictor.py içindedir. app.py'nin tek görevi:
-  1) HTTP isteğini karşılamak (dosya var mı, uzantı geçerli mi?)
-  2) Gelen resmi (audit/debug amaçlı) uploads/ klasörüne kaydetmek
-  3) predictor.predict_image()'ı çağırıp sonucu JSON olarak döndürmek
-
-Eski mimaride PHP, `shell_exec()` ile bu script'i doğrudan process
-olarak çalıştırıyordu. Yeni mimaride PHP, bu dosyayı HTTP POST ile
-çağırır — Flask bağımsız bir servis olarak sürekli ayakta durur ve
-modeli sadece bir kez belleğe yükler (bkz. services/predictor.py).
-"""
-
 import os
 import uuid
 from datetime import datetime
